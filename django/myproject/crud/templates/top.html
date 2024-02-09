@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>トップページ</title>
+</head>
+<body>
+    <h1>Hello World!</h1>
+
+    <!-- views.pyから受け取ったデータを表示する。Django Template Language(Djangoテンプレート言語) -->
+    <!-- {{ は テンプレート変数の表示。 -->
+    <div>{{ message }}</div>
+
+    <!-- scoreを表示する。 -->
+    <div>{{ score }}</div>
+
+    <!-- numbers を表示する。 -->
+    <div>{{ numbers }}</div>
+
+    <!-- Pythonの場合。[0]などで呼び出せるが、DTLでは[]を使わない。 -->
+    <div>{{ numbers.3 }}</div>
+
+    <!-- リストの全ての要素を1個ずつ取り出し、divタグで囲んで出力したい。 -->
+    <!-- DTLのforループを使用する。 -->
+    {% for number in numbers %}
+    <div>{{ number }}</div>
+    {% endfor %}
+
+    <!-- endfor で forループさせる範囲を書く。
+        Pythonのforはインデントで表現ができたが、HTMLではインデントを判定できない。
+
+        もし、 endforがないと、
+        Unclosed tag on line 27: 'for'. Looking for one of: empty, endfor.
+        などとエラーが出る。   
+    -->
+
+    <!--
+        python
+
+        for number in numbers:
+            print(number)
+
+    -->
+
+    <!-- profileを表示させる。 -->
+    <div>{{ profile }}</div>
+    <!--辞書型のキー(nameとage)を指定して、値を取り出すには？  オブジェクトの属性のような呼び出し方。-->
+    <div>名前:{{ profile.name }}</div>
+    <div>年齢:{{ profile.age }}</div>
+
+
+    <!--辞書型のリスト students を表示させる。 -->
+    <div>{{ students }}</div>
+    <!--1個ずつ生徒情報を取り出す。forループで。-->
+    <!-- {% はテンプレートタグ(処理を実行するとき)の書き方。{{ テンプレート変数(データの呼び出し)の書き方。 -->
+    {% for student in students %}
+    <div>{{ student.number }} : {{ student.name }}</div>
+    {% endfor %}
+
+
+    <!-- datetime型、ブーリアン型のデータを表示してみる。 -->
+    <div>{{ dt|date:"Y-m-d H:i:s"  }}</div>
+    <!--テンプレートフィルター-->
+    <div>{{ flag }}</div>
+
+    {# Djangoのテンプレートでコメントを書くとき、HTMLのコメントアウトだと、ソースコードから見えてしまう。#}
+    {% comment %}
+    {% endcomment %}
+    {# このformの送信先は？ #}
+    {# method属性にメソッドを書く #}
+    <form action="" method="">
+        <input type="text" name="view">
+        <input type="submit" value="閲覧">
+    </form>
+
+    <form action="" method="post" enctype="multipart/form-data">
+        {# CSRF攻撃を防ぐためDjangoではセキュリティ対策をしている #}
+        {# post #}
+        {% csrf_token %}
+        <input type="text" name="comment">
+
+        <input type="file" name="document">
+
+        <input type="submit" value="投稿">
+    </form>
+
+    {% for topic in topics %}
+    <div>{{ topic.id }}:{{ topic.comment }}</div>
+    {% endfor %}
+
+    <form>
+        <label for="id">お名前：<input type="text" name="name"></label>
+        <label for="id">メール：<input type="mail" name="name"></label>
+        <input type="reset" value="リセットする">
+      </form>
+</body>
+</html>
