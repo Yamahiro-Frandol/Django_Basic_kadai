@@ -12,7 +12,7 @@ from .models import Topic
 
 import magic
 
-ALLOWED_MIME    = [ "application/pdf" ]
+ALLOWED_MIME    = [ "application/pdf","application/vnd.openxmlformats-officedocument.spreadsheetml.sheet xlsx" ]
 # from .import 
 
 # テンプレートをレンダリングする処理(ビュー) TemplateViewを継承して作る。
